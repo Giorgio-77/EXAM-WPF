@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace _001_ARGB.ViewModel
@@ -85,13 +86,30 @@ namespace _001_ARGB.ViewModel
         public bool CanExecuteAddColorCommand(object parameter)
         {
             var result = ArgbColors.Where(item => item.Hex == CurrentColor.Hex).ToArray();
-            if (result.Length != 0 || CurrentColor.Hex == "#00000000")
+            if (result.Length != 0 || CurrentColor.A == 0)
                 return false;
             return true;
         }
 
         // delete
-
+        RelayCommand _removeColorCommand;
+        public ICommand RemoveColorCommand
+        {
+            get
+            {
+                return _removeColorCommand ??
+                    (_removeColorCommand = new RelayCommand(
+                        parameter =>
+                        {
+                            ArgbColors.Remove(SelectedColor);
+                        },
+                        parameter =>
+                        {
+                            return ArgbColors.Contains(_selectedColor);
+                        }
+                    ));
+            }
+        }
 
 
         protected override void OnDispose()
