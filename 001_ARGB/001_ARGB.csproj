@@ -64,6 +64,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DoubleToColorConverter.cs" />
+    <Compile Include="Infrastructure\RelayCommand.cs" />
     <Compile Include="Model\ArgbColor.cs" />
     <Compile Include="Model\ArgbColorRepository.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

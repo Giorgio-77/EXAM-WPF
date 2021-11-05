@@ -9,25 +9,66 @@ namespace _001_ARGB.Model
 {
     class ArgbColor
     {
-        public byte A { get; set; }
-        public byte R { get; set; }
-        public byte G { get; set; }
-        public byte B { get; set; }
+        private byte a;
+        private byte r;
+        private byte g;
+        private byte b;
 
-        public ArgbColor() { }
-        public ArgbColor(byte a, byte r, byte g, byte b)
-            => (A, R, G, B) = (a, r, g, b);
-
-        public Color GetColor()
+        public byte A
         {
-            Color color = Color.FromArgb(A, R, G, B);
-            return color;
+            get => a;
+
+            set
+            {
+                a = value;
+                SetHex();
+            }
         }
 
-        public override string ToString()
+        public byte R
         {
-            Color color = GetColor();
-            return color.A.ToString("X2") + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
+            get => r;
+
+            set
+            {
+                r = value;
+                SetHex();
+            }
+        }
+
+        public byte G
+        {
+            get => g;
+
+            set
+            {
+                g = value;
+                SetHex();
+            }
+        }
+
+        public byte B
+        {
+            get => b;
+
+            set
+            {
+                b = value;
+                SetHex();
+            }
+        }
+
+        public string Hex { get; set; }
+
+        public ArgbColor()
+            => (A, R, G, B) = (0,0,0,0);
+        public ArgbColor(double a, double r, double g, double b)
+            => (A, R, G, B) = ((byte)a, (byte)r, (byte)g, (byte)b);
+
+        public void SetHex()
+        {
+            Color color = Color.FromArgb(A, R, G, B);
+            Hex = "#" + color.A.ToString("X2") + color.R.ToString("X2") + color.G.ToString("X2") + color.B.ToString("X2");
         }
     }
 }

@@ -4,48 +4,37 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_001_ARGB"
+        xmlns:local1="clr-namespace:_001_ARGB.ViewModel" d:DataContext="{d:DesignInstance Type=local1:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="700">
+
+    <Window.DataContext>
+        <local1:MainWindowViewModel></local1:MainWindowViewModel>
+    </Window.DataContext>
+
 
     <Window.Resources>
         <DataTemplate x:Key="itemTemlate">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="75"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="510"></ColumnDefinition>
                     <ColumnDefinition Width="75"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Text="FF480000" Margin="5" HorizontalAlignment="Center"/>
-                <Border Background="Aqua" Margin="5" Grid.Column="1"/>
+                <TextBlock Text="{Binding Hex}" Margin="5" HorizontalAlignment="Center"/>
+                <Border Background="{Binding Hex}" Margin="5" Grid.Column="1" />
                 <Button Content="Delete" Margin="5" Grid.Column="2"/>
             </Grid>
         </DataTemplate>
 
-        <SolidColorBrush x:Key="customColor">
-            <SolidColorBrush.Color>
-                <Color R="100" G="200" B="30" A="100"/>
-            </SolidColorBrush.Color>
-        </SolidColorBrush>
-
         <local:DoubleToColorConverter x:Key="colorConverter"/>
-
-        <!--<SolidColorBrush x:Key="customColor">
-            <SolidColorBrush.Color>
-                <MultiBinding Converter="">
-                    <Binding ElementName="sliderAlpha" Path="Value"/>
-                    <Binding ElementName="sliderRed" Path="Value"/>
-                    <Binding ElementName="sliderGreen" Path="Value"/>
-                    <Binding ElementName="sliderBlue" Path="Value"/>
-                </MultiBinding>
-            </SolidColorBrush.Color>
-        </SolidColorBrush>-->
-
 
     </Window.Resources>
     
+     
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
@@ -81,10 +70,10 @@
             <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding ElementName=sliderGreen, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center" />
             <TextBlock Grid.Column="2" Grid.Row="3" Text="{Binding ElementName=sliderBlue, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-            <Slider IsEnabled="{Binding ElementName=checkBoxAlpha, Path=IsChecked}" x:Name="sliderAlpha" Grid.Column="3" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
-            <Slider IsEnabled="{Binding ElementName=checkBoxRed, Path=IsChecked}" x:Name="sliderRed" Grid.Column="3" Grid.Row="1" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
-            <Slider IsEnabled="{Binding ElementName=checkBoxGreen, Path=IsChecked}" x:Name="sliderGreen" Grid.Column="3" Grid.Row="2" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
-            <Slider IsEnabled="{Binding ElementName=checkBoxBlue, Path=IsChecked}" x:Name="sliderBlue" Grid.Column="3" Grid.Row="3" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
+            <Slider Value="{Binding CurrentColor.A, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxAlpha, Path=IsChecked}" x:Name="sliderAlpha" Grid.Column="3" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
+            <Slider Value="{Binding CurrentColor.R, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxRed, Path=IsChecked}" x:Name="sliderRed" Grid.Column="3" Grid.Row="1" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
+            <Slider Value="{Binding CurrentColor.G, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxGreen, Path=IsChecked}" x:Name="sliderGreen" Grid.Column="3" Grid.Row="2" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
+            <Slider Value="{Binding CurrentColor.B, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxBlue, Path=IsChecked}" x:Name="sliderBlue" Grid.Column="3" Grid.Row="3" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
 
             <Border Grid.Column="4" Grid.RowSpan="4" Margin="5">
                 <Border.Background>
@@ -101,11 +90,12 @@
                     </SolidColorBrush>
                 </Border.Background>
             </Border>
-            <Button Grid.Row="4" Name="btnAdd" IsEnabled="True" Grid.ColumnSpan="3" Content="Add" Margin="5" />
+            <Button Command="{Binding AddColorCommand}" Grid.Row="4" Name="btnAdd" IsEnabled="True" Grid.ColumnSpan="3" Content="Add" Margin="5" />
         </Grid>
 
         <ListBox 
             x:Name="listBox" Margin="5" Grid.Row="1"
-            ItemTemplate="{StaticResource itemTemlate}" />
+            ItemTemplate="{StaticResource itemTemlate}" 
+            ItemsSource="{Binding ArgbColors}" SelectedItem="{Binding SelectedColor}"/>
     </Grid>
 </Window>
