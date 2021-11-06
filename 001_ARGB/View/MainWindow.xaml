@@ -34,8 +34,6 @@
                     CommandParameter="{Binding SelectedColor}" 
                     Content="Delete" Margin="5" Grid.Column="2"/>
 
-
-
             </Grid>
         </DataTemplate>
 

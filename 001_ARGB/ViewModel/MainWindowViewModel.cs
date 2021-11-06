@@ -99,14 +99,7 @@ namespace _001_ARGB.ViewModel
             {
                 return _removeColorCommand ??
                     (_removeColorCommand = new RelayCommand(
-                        parameter =>
-                        {
-                            ArgbColors.Remove(SelectedColor);
-                        },
-                        parameter =>
-                        {
-                            return ArgbColors.Contains(SelectedColor);
-                        }
+                        parameter => ArgbColors.Remove(SelectedColor)
                     ));
             }
         }
