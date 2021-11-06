@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:_001_ARGB"
         xmlns:local1="clr-namespace:_001_ARGB.ViewModel" d:DataContext="{d:DesignInstance Type=local1:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="700" Style="{DynamicResource WindowStyle}">
+        Title="Color Viewer" Height="450" Width="700" Style="{DynamicResource WindowStyle}">
 
     <Window.DataContext>
         <local1:MainWindowViewModel></local1:MainWindowViewModel>
