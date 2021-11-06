@@ -6,46 +6,51 @@
         xmlns:local="clr-namespace:_001_ARGB"
         xmlns:local1="clr-namespace:_001_ARGB.ViewModel" d:DataContext="{d:DesignInstance Type=local1:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="700">
+        Title="MainWindow" Height="450" Width="700" Style="{DynamicResource WindowStyle}">
 
     <Window.DataContext>
         <local1:MainWindowViewModel></local1:MainWindowViewModel>
     </Window.DataContext>
 
-
     <Window.Resources>
-        <DataTemplate x:Key="itemTemlate">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75"></ColumnDefinition>
-                    <ColumnDefinition Width="510"></ColumnDefinition>
-                    <ColumnDefinition Width="75"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30"></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Text="{Binding Hex}" Margin="5" HorizontalAlignment="Center"/>
-                <Border Background="{Binding Hex}" Margin="5" Grid.Column="1" />
-                
-                <Button 
-                    IsEnabled="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBox}}, 
-                    Path=DataContext.RemoveColorCommand}" 
-                    CommandParameter="{Binding SelectedColor}" 
-                    Content="Delete" Margin="5" Grid.Column="2"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Default.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-            </Grid>
-        </DataTemplate>
+            <DataTemplate x:Key="itemTemlate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition Width="490"/>
+                        <ColumnDefinition Width="75"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Style="{DynamicResource TextBlockStyle}" Text="{Binding Hex}" Margin="5" HorizontalAlignment="Center"/>
+                    <Border Style="{DynamicResource BorderStyle}" Background="{Binding Hex}" Margin="5" Grid.Column="1" />
 
-        <local:DoubleToColorConverter x:Key="colorConverter"/>
+                    <Button 
+						IsEnabled="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
+						Command="{Binding DataContext.RemoveColorCommand, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" 
+						CommandParameter="{Binding SelectedColor}" 
+						Content="Delete" Margin="5" Grid.Column="2"
+                        Style="{DynamicResource ButtonStyle}"/>
 
+                </Grid>
+            </DataTemplate>
+
+            <local:DoubleToColorConverter x:Key="colorConverter"/>
+
+        </ResourceDictionary>
     </Window.Resources>
-    
-     
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition ></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -67,22 +72,22 @@
             <CheckBox IsChecked="True" Grid.Row="2" Name="checkBoxGreen" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <CheckBox IsChecked="True" Grid.Row="3" Name="checkBoxBlue" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-            <TextBlock Grid.Column="1" Text="Alpha: " VerticalAlignment="Center" HorizontalAlignment="Right" />
-            <TextBlock Grid.Column="1" Grid.Row="1" Text="Red: " VerticalAlignment="Center" HorizontalAlignment="Right" />
-            <TextBlock Grid.Column="1" Grid.Row="2" Text="Green: " VerticalAlignment="Center" HorizontalAlignment="Right" />
-            <TextBlock Grid.Column="1" Grid.Row="3" Text="Blue: " VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="1" Text="Alpha: " VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="1" Grid.Row="1" Text="Red: " VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="1" Grid.Row="2" Text="Green: " VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="1" Grid.Row="3" Text="Blue: " VerticalAlignment="Center" HorizontalAlignment="Right" />
 
-            <TextBlock Grid.Column="2" Text="{Binding ElementName=sliderAlpha, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=sliderRed, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding ElementName=sliderGreen, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <TextBlock Grid.Column="2" Grid.Row="3" Text="{Binding ElementName=sliderBlue, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="2" Text="{Binding ElementName=sliderAlpha, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="2" Grid.Row="1" Text="{Binding ElementName=sliderRed, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="2" Grid.Row="2" Text="{Binding ElementName=sliderGreen, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <TextBlock Style="{DynamicResource TextBlockStyle}" Grid.Column="2" Grid.Row="3" Text="{Binding ElementName=sliderBlue, Path=Value}" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-            <Slider Value="{Binding CurrentColor.A, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxAlpha, Path=IsChecked}" x:Name="sliderAlpha" Grid.Column="3" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
-            <Slider Value="{Binding CurrentColor.R, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxRed, Path=IsChecked}" x:Name="sliderRed" Grid.Column="3" Grid.Row="1" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
-            <Slider Value="{Binding CurrentColor.G, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxGreen, Path=IsChecked}" x:Name="sliderGreen" Grid.Column="3" Grid.Row="2" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
-            <Slider Value="{Binding CurrentColor.B, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxBlue, Path=IsChecked}" x:Name="sliderBlue" Grid.Column="3" Grid.Row="3" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
+            <Slider Style="{DynamicResource SliderStyle}" Value="{Binding CurrentColor.A, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxAlpha, Path=IsChecked}" x:Name="sliderAlpha" Grid.Column="3" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" Foreground="Gray" />
+            <Slider Style="{DynamicResource SliderStyle}"  Value="{Binding CurrentColor.R, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxRed, Path=IsChecked}" x:Name="sliderRed" Grid.Column="3" Grid.Row="1" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
+            <Slider Style="{DynamicResource SliderStyle}" Value="{Binding CurrentColor.G, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxGreen, Path=IsChecked}" x:Name="sliderGreen" Grid.Column="3" Grid.Row="2" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
+            <Slider Style="{DynamicResource SliderStyle}" Value="{Binding CurrentColor.B, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding ElementName=checkBoxBlue, Path=IsChecked}" x:Name="sliderBlue" Grid.Column="3" Grid.Row="3" Minimum="0" Maximum="255" TickFrequency="1" IsSnapToTickEnabled="True" Margin="5,0" VerticalAlignment="Center" />
 
-            <Border Grid.Column="4" Grid.RowSpan="4" Margin="5">
+            <Border Style="{DynamicResource BorderStyle}" Grid.Column="4" Grid.RowSpan="4" Margin="5">
                 <Border.Background>
                     <SolidColorBrush>
                         <SolidColorBrush.Color>
@@ -97,12 +102,26 @@
                     </SolidColorBrush>
                 </Border.Background>
             </Border>
-            <Button Command="{Binding AddColorCommand}" Grid.Row="4" Name="btnAdd" IsEnabled="True" Grid.ColumnSpan="3" Content="Add" Margin="5" />
+            <Button  Style="{DynamicResource ButtonStyle}" Command="{Binding AddColorCommand}" Grid.Row="4" Name="btnAdd" IsEnabled="True" Grid.ColumnSpan="3" Content="Add" Margin="5" />
         </Grid>
 
         <ListBox 
             x:Name="listBox" Margin="5" Grid.Row="1"
             ItemTemplate="{StaticResource itemTemlate}" 
-            ItemsSource="{Binding ArgbColors}" SelectedItem="{Binding SelectedColor}"/>
+            ItemsSource="{Binding ArgbColors}" SelectedItem="{Binding SelectedColor}"
+            ItemContainerStyle="{DynamicResource ListBoxItemStyle}"
+            Style="{DynamicResource ListBoxtyle}"
+            />
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <RadioButton Name="rbDefault" Content="Default" VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="True" Checked="rbDefault_Checked"/>
+            <RadioButton Name="rbDark" Grid.Column="1" Content="Dark" VerticalAlignment="Center" HorizontalAlignment="Center" Checked="rbDark_Checked"/>
+        </Grid>
     </Grid>
 </Window>

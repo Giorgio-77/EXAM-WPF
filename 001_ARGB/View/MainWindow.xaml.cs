@@ -20,11 +20,30 @@ namespace _001_ARGB
     /// </summary>
     public partial class MainWindow : Window
     {
+        ResourceDictionary newDictionary = new ResourceDictionary();
+
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
+        private void rbDefault_Checked(object sender, RoutedEventArgs e)
+        {
+            if (rbDefault.IsChecked == true)
+            {
+                newDictionary.Source = new Uri("Themes/Default.xaml", UriKind.Relative);
+                this.Resources.MergedDictionaries[0] = newDictionary;
+            }
+        }
 
+        private void rbDark_Checked(object sender, RoutedEventArgs e)
+        {
+            if (rbDark.IsChecked == true)
+            {
+                newDictionary.Source = new Uri("Themes/Dark.xaml", UriKind.Relative);
+                this.Resources.MergedDictionaries[0] = newDictionary;
+            }
+        }
     }
 }
