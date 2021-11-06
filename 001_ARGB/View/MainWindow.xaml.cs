@@ -24,5 +24,7 @@ namespace _001_ARGB
         {
             InitializeComponent();
         }
+
+
     }
 }

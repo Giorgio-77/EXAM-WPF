@@ -105,7 +105,7 @@ namespace _001_ARGB.ViewModel
                         },
                         parameter =>
                         {
-                            return ArgbColors.Contains(_selectedColor);
+                            return ArgbColors.Contains(SelectedColor);
                         }
                     ));
             }
